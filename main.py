@@ -673,29 +673,37 @@ default_notifications = {
     'daily_meditation_reminders': False
 }
 
-# Insert default toggles if not present
-if notifications_collection.find_one({}) is None:
-    notifications_collection.insert_one(default_notifications)
+# Set default notifications for a specific user
+@app.route('/notification/<string:user_id>', methods=['POST'])
+def set_default_notifications(user_id):
+    user_object_id = ObjectId(user_id)
+    user_document = notifications_collection.find_one({"_id": user_object_id})
 
-class NotificationResource(Resource):
-    @jwt_required()
-    def get(self, user_id):
-        # Retrieve current toggle states for the given user_id
-        user_object_id = ObjectId(user_id)
-        notifications = notifications_collection.find_one({"_id": user_object_id})
+    if user_document is None:
+        notifications_collection.insert_one({"_id": user_object_id, **default_notifications})
+        return jsonify({"message": f"Default notifications set for user {user_id}"}), 200
+    else:
+        return jsonify({"message": f"User {user_id} already has notifications set"}), 200
 
-        # Manually convert ObjectId to string
-        if notifications:
-            for key, value in notifications.items():
-                if isinstance(value, ObjectId):
-                    notifications[key] = str(value)
+# Get notifications for a specific user
+@app.route('/notification/<string:user_id>', methods=['GET'])
+def get_notifications(user_id):
+    user_object_id = ObjectId(user_id)
+    user_document = notifications_collection.find_one({"_id": user_object_id})
 
-            return jsonify(notifications), 200
-        else:
-            return jsonify({"message": "User not found"}), 404
+    if user_document:
+        notifications = {key: str(value) if isinstance(value, ObjectId) else value for key, value in user_document.items()}
+        return jsonify(notifications), 200
+    else:
+        return jsonify({"message": f"User {user_id} not found"}), 404
 
-    @jwt_required()
-    def post(self, user_id):
+# Update notifications for a specific user
+@app.route('/notification/<string:user_id>', methods=['PUT'])
+def update_notifications(user_id):
+    user_object_id = ObjectId(user_id)
+    user_document = notifications_collection.find_one({"_id": user_object_id})
+
+    if user_document:
         data = request.get_json()
 
         # Validate data structure (customize based on your requirements)
@@ -711,25 +719,93 @@ class NotificationResource(Resource):
             return jsonify({'message': 'Invalid notification name'}), 400
 
         # Update the toggle state in the database for the given user_id
-        user_object_id = ObjectId(user_id)
         notifications_collection.update_one({"_id": user_object_id}, {'$set': {notification_name: state}}, upsert=True)
         return jsonify({'message': f'Notification {notification_name} updated successfully for user {user_id}'}), 200
+    else:
+        return jsonify({"message": f"User {user_id} not found"}), 404
 
-    @jwt_required()
-    def put(self, user_id, notification_name):
-        data = request.get_json()
+# Insert default toggles if not present
+# if notifications_collection.find_one({}) is None:
+#     notifications_collection.insert_one(default_notifications)
 
-        # Check if notification_name is valid
-        if notification_name not in default_notifications:
-            return jsonify({'message': 'Invalid notification name'}), 400
+# class NotificationResource(Resource):
+#     @jwt_required()
+#     def get(self, user_id):
+#         user_object_id = ObjectId(user_id)
+#         notifications = notifications_collection.find_one({"_id": user_object_id})
 
-        # Update the toggle state in the database for the given user_id
-        user_object_id = ObjectId(user_id)
-        notifications_collection.update_one({"_id": user_object_id}, {'$set': {notification_name: data['state']}}, upsert=True)
-        return jsonify({'message': f'Notification {notification_name} updated successfully for user {user_id}'}), 200
+#         if notifications:
+#             for key, value in notifications.items():
+#                 if isinstance(value, ObjectId):
+#                     notifications[key] = str(value)
 
-api.add_resource(NotificationResource, '/notification/<string:user_id>', '/notification/<string:user_id>/<string:notification_name>')
+#             response = jsonify(notifications)
+#             response.status_code = 200 # or 400 or whatever
+#             return response
+# above is the new
+        #     return jsonify(notifications), 200
+        # else:
+        #     return jsonify({"message": "User not found"}), 404
 
+    # @jwt_required()
+    # def post(self, user_id):
+    #     data = request.get_json()
+
+    #     required_fields = ['notification_name', 'state']
+    #     if not all(field in data for field in required_fields):
+    #         return jsonify({'message': 'Missing required fields'}), 400
+
+    #     notification_name = data['notification_name']
+    #     state = data['state']
+
+    #     if notification_name not in default_notifications:
+    #         return jsonify({'message': 'Invalid notification name'}), 400
+
+    #     user_object_id = ObjectId(user_id)
+    #     notifications_collection.update_one({"_id": user_object_id}, {'$set': {notification_name: state}}, upsert=True)
+    #     return jsonify({'message': f'Notification {notification_name} updated successfully for user {user_id}'}), 200
+#new
+#     @jwt_required()
+#     def post(self, user_id):
+#         data = request.get_json()
+
+#         # Validate data structure (customize based on your requirements)
+#         required_fields = ['notification_name', 'state']
+#         if not all(field in data for field in required_fields):
+#             response = jsonify({'message': 'Missing required fields'})
+#             response.status_code = 400
+#             return response
+
+#         notification_name = data['notification_name']
+#         state = data['state']
+
+#         # Check if notification_name is valid
+#         if notification_name not in default_notifications:
+#             response = jsonify({'message': 'Invalid notification name'})
+#             response.status_code = 400
+#             return response
+
+#         user_object_id = ObjectId(user_id)
+#         notifications_collection.update_one({"_id": user_object_id}, {'$set': {notification_name: state}}, upsert=True)
+
+#         response_data = {'message': f'Notification {notification_name} updated successfully for user {user_id}'}
+#         response = jsonify(response_data)
+#         response.status_code = 200
+
+#         return response
+
+#     @jwt_required()
+#     def put(self, user_id, notification_name):
+#         data = request.get_json()
+
+#         if notification_name not in default_notifications:
+#             return jsonify({'message': 'Invalid notification name'}), 400
+
+#         user_object_id = ObjectId(user_id)
+#         notifications_collection.update_one({"_id": user_object_id}, {'$set': {notification_name: data['state']}}, upsert=True)
+#         return jsonify({'message': f'Notification {notification_name} updated successfully for user {user_id}'}), 200
+
+# api.add_resource(NotificationResource, '/notification/<string:user_id>', '/notification/<string:user_id>/<string:notification_name>')
 
 # Predefined set of available languages
 available_languages = ['English', 'Spanish', 'French', 'German', 'Chinese', 'Japanese']
