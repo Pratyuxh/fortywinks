@@ -1,0 +1,2856 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "SuperMindsIT",
+    "version": "1.0.0",
+    "title": "Fortywinks API"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local server"
+    },
+    {
+      "url": "https://fortywinks-api.superminds.dev",
+      "description": "Production server"
+    }
+    ],
+  "tags": [
+       {
+        "name": "Authentication",
+        "description": "APIs for Authentication. "
+      },
+      {
+        "name": "Profile",
+        "description": "APIs for User Profile. "
+      },
+      {
+        "name": "Settings",
+        "description": "APIs for User Settings. "
+      },
+      {
+        "name": "Help Center",
+        "description": "APIs for User Help. "
+      },
+      {
+        "name": "Default",
+        "description": "APIs to get All Data. "
+      }
+    ],
+  "paths": {
+      "/signup": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Create a new User",
+        "description": "This endpoint will create a new user",
+        "security":[{"JWT": {} }],
+        "requestBody": {
+          "description": "Signup Post Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/schemas/signup"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "User Created",
+            "content": {
+              "application/json": {
+              "schema": {
+              "$ref": "#/serverResponseExample/createSignupSuccess"
+                }
+              }
+            }
+          }, 
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/serverResponseExample/createSignupError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/serverResponseExample/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+      },
+      "/login": {
+        "post": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Create a new token",
+          "description": "This endpoint will create token",
+          "security":[{"JWT": {} }],
+          "requestBody": {
+            "description": "Login Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/login"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Token Created",
+              "content": {
+                "application/json": {
+                "schema": {
+                "$ref": "#/serverResponseExample/createLoginSuccess"
+                  }
+                }
+              }
+            }, 
+            "400": {
+              "description": "Bad Request.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/createLoginError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/logout": {
+        "post": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Logout",
+          "description": "This endpoint will delete user",
+          "security":[{"JWT": {} }],
+          "requestBody": {
+            "description": "Delete Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/logout"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "User Deleted",
+              "content": {
+                "application/json": {
+                "schema": {
+                "$ref": "#/serverResponseExample/createLogoutSuccess"
+                  }
+                }
+              }
+            }, 
+            "400": {
+              "description": "Bad Request.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/createLogoutError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/reset-password": {
+        "post": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Reset Password",
+          "description": "This endpoint will reset password",
+          "security":[{"JWT": {} }],
+          "requestBody": {
+            "description": "Reset Password Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/resetpassword"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Password Reset",
+              "content": {
+                "application/json": {
+                "schema": {
+                "$ref": "#/serverResponseExample/createResetPasswordSuccess"
+                  }
+                }
+              }
+            }, 
+            "400": {
+              "description": "Bad Request.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/createResetPasswordError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/profile": {
+        "get": {
+          "tags": [
+            "Profile"
+          ],
+          "summary": "Return Profile",
+          "description": "This endpoint will get all User Profile",
+          "security":[{"JWT": {} }],
+          "produces": "['application/json']",
+          "responses": {
+            "200": {
+              "description": "Profile Data",
+              "content": {
+                "application/json": {
+                  "example": [
+                  {
+                    "_id":"655cc081add35235c1c1682c",
+                    "fullname":"Fabio Rosa",
+                    "imageUrl": "www.xyz.com",
+                    "email": "fabio@superminds.dev",
+                    "dob": "01.01.2024",
+                    "phonenumber": "100",
+                    "country": "Portugal"
+                  },
+                  {
+                    "_id":"655cc081add35235c1c1682c",
+                    "fullname":"Ian Vaughan",
+                    "imageUrl": "www.xyz.com",
+                    "email": "ian@superminds.dev",
+                    "dob": "01.01.2024",
+                    "phonenumber": "101",
+                    "country": "UK"
+                  }
+                ]
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Profile"
+          ],
+          "summary": "Create a new Profile",
+          "description": "This endpoint will create a new User Profile",
+          "requestBody": {
+            "description": "Profile Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/profile"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Profile Created",
+              "content": {
+                "application/json": {
+                "schema": {
+                "$ref": "#/serverResponseExample/createProfileSuccess"
+                  }
+                }
+              }
+            }, 
+            "400": {
+              "description": "Bad Request.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/createProfileError"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/profile/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the profile that we want to match",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Profile"
+          ],
+          "summary": "Get Profile with given ID",
+          "description": "This endpoint will get Profile by ID.",
+          "security":[{"JWT": {} }],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Profile ID",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Profile Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getProfileByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getProfileByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a Profile by ID",
+          "description": "This endpoint will update a profile by ID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Profile"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Update Profile",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Update profile",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/profile"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Profile Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/updateProfileByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getProfileByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Profile by ID",
+          "description": "This API Endpoint will delete Profile by ID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Profile"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Delete profile",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Profile Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/deleteProfileByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getProfileByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/profile/<id>/image": {
+        "post": {
+          "tags": [
+            "Profile"
+          ],
+          "summary": "Upload an Image",
+          "description": "This endpoint will upload a new Image",
+          "security":[{"JWT": {} }],
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "id": {
+                      "type": "string",
+                      "format": "string"
+                    },
+                    "device_type": {
+                      "type": "string",
+                      "format": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Profile Image Created",
+              "content": {
+                "application/json": {
+                "schema": {
+                "$ref": "#/serverResponseExample/createProfileImageSuccess"
+                  }
+                }
+              }
+            }, 
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/profile/<id>/image/<filename>": {
+        "delete": {
+          "summary": "Delete Profile Image",
+          "description": "This endpoint will Delete Profile Image",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Profile"
+          ],
+          "responses": {
+            "200": {
+              "description": "Profile Image Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/deleteProfileImageByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getProfileByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/subscription/<user_id>": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user that we want to add subscription",
+            "type": "string"
+          }
+        ],
+        "post": {
+          "tags": [
+            "Settings"
+          ],
+          "summary": "Create a new subscription",
+          "description": "This endpoint will create a new subscription",
+          "requestBody": {
+            "description": "Subscription Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/subscription"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Subscription Created",
+              "content": {
+                "application/json": {
+                "schema": {
+                "$ref": "#/serverResponseExample/createSubscriptionSuccess"
+                  }
+                }
+              }
+            }, 
+            "400": {
+              "description": "Bad Request.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/createSubscriptionError"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "Settings"
+          ],
+          "summary": "Get subscription details with given ID",
+          "description": "This endpoint will get subscription details by ID.",
+          "security":[{"JWT": {} }],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Subscription ID",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Subscription Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getSubscriptionByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getSubscriptionByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Cancel a Subscription by ID",
+          "description": "This endpoint will cancel a subscription by ID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Settings"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Cancel Subscription",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Cancel Subscription",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/subscription"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Subscription Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/cancelSubscriptionByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getSubscriptionByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "summary": "Renew a Subscription by ID",
+          "description": "This endpoint will renew a subscription by ID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Settings"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Renew a Subscription",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Renew Subscription",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/subscription"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Subscription Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/renewSubscriptionByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getSubscriptionByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/notification": {
+        "get": {
+          "tags": [
+            "Settings"
+          ],
+          "summary": "Return notification settings",
+          "description": "This endpoint will get all notification settings",
+          "security":[{"JWT": {} }],
+          "produces": "['application/json']",
+          "responses": {
+            "200": {
+              "description": "Notification Data",
+              "content": {
+                "application/json": {
+                  "example": [
+                  {
+                    "_id": "65b246749eb3e56f27b41cbf",
+                    "daily_meditation_reminders": false,
+                    "milestone_completion": false,
+                    "pause_all_notification": false,
+                    "survey_notification": false,
+                    "uploads": false
+                  },
+                  {
+                    "_id": "65b246749eb3e56f27b41cbg",
+                    "daily_meditation_reminders": true,
+                    "milestone_completion": true,
+                    "pause_all_notification": true,
+                    "survey_notification": true,
+                    "uploads": true
+                  }
+                ]
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a notification",
+          "description": "This endpoint will update a notification setting by ID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Settings"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Update Notification Settings",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Update Notification Settings",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/notificationsetting"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Notification Setting Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/updateNotificationSettingByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getNotificationSettingByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/language/<id>": {
+        "get": {
+          "tags": [
+            "Settings"
+          ],
+          "summary": "Return language settings",
+          "description": "This endpoint will get all language settings",
+          "security":[{"JWT": {} }],
+          "produces": "['application/json']",
+          "responses": {
+            "200": {
+              "description": "Language Data",
+              "content": {
+                "application/json": {
+                  "example": [
+                  {
+                    "chosen_language": null
+                  },
+                  {
+                    "chosen_language": "Spanish"
+                  }
+                ]
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a language",
+          "description": "This endpoint will update a language by ID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Settings"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Update Language",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Update Language",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/languagesetting"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Language Setting Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/updateLanguageSettingByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getLanguageSettingByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/contact": {
+        "get": {
+          "tags": [
+            "Help Center"
+          ],
+          "summary": "Return Contact",
+          "description": "This endpoint will get all contact",
+          "security":[{"JWT": {} }],
+          "produces": "['application/json']",
+          "responses": {
+            "200": {
+              "description": "Contact Data",
+              "content": {
+                "application/json": {
+                  "example": [
+                  {
+                    "_id":"655cc081add35235c1c1682c",
+                    "content": "I am not able to login",
+                    "email": "fabio@superminds.dev"
+                  },
+                  {
+                    "_id":"655cc081add35235c1c1682c",
+                    "content": "I am not able to logout",
+                    "email": "fabio@superminds.dev"
+                  }
+                ]
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Help Center"
+          ],
+          "summary": "Create a new Contact Request",
+          "description": "This endpoint will create a new contact request",
+          "requestBody": {
+            "description": "Contact Request Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/contact"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Contact Request Created",
+              "content": {
+                "application/json": {
+                "schema": {
+                "$ref": "#/serverResponseExample/createContactRequestSuccess"
+                  }
+                }
+              }
+            }, 
+            "400": {
+              "description": "Bad Request.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/createContactRequestError"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/contact/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the contactrequest that we want to match",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Help Center"
+          ],
+          "summary": "Get Contact Request with given ID",
+          "description": "This endpoint will get Contact Request by ID.",
+          "security":[{"JWT": {} }],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Contact Request ID",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Contact Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getContactRequestByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getContactRequestyIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a Contact by ID",
+          "description": "This endpoint will update a Contact Request by ID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Help Center"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Update Contact Request",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Update contact",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/contact"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Contact Request Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/updateContactRequestByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getContactRequestByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Contact Request by ID",
+          "description": "This API Endpoint will delete Contact Request by ID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Help Center"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Delete contactrequest",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Contact Request Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/deleteContactRequestByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getContactRequestByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/report": {
+        "get": {
+          "tags": [
+            "Help Center"
+          ],
+          "summary": "Return Report",
+          "description": "This endpoint will get all User Reports",
+          "security":[{"JWT": {} }],
+          "produces": "['application/json']",
+          "responses": {
+            "200": {
+              "description": "Report Data",
+              "content": {
+                "application/json": {
+                  "example": [
+                  {
+                    "_id":"655cc081add35235c1c1682c",
+                    "content":"Fabio Rosa",
+                    "files": "www.xyz.com"
+                  },
+                  {
+                    "_id":"655cc081add35235c1c1682c",
+                    "content":"Ian",
+                    "files": "www.xyz.com"
+                  }
+                ]
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Help Center"
+          ],
+          "summary": "Create a new Report request",
+          "description": "This endpoint will create a new report request",
+          "requestBody": {
+            "description": "ReportRequest Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/report"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Report Request Created",
+              "content": {
+                "application/json": {
+                "schema": {
+                "$ref": "#/serverResponseExample/createReportRequestSuccess"
+                  }
+                }
+              }
+            }, 
+            "400": {
+              "description": "Bad Request.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/createReportRequestError"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/report/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the profile that we want to match",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Help Center"
+          ],
+          "summary": "Get Report Request with given ID",
+          "description": "This endpoint will get Report by ID.",
+          "security":[{"JWT": {} }],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Report ID",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Profile Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getReportrequestByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getReportrequestByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a Report Request by ID",
+          "description": "This endpoint will update a report request by ID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Help Center"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Update Report Request",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Update report request",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/report"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Profile Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/updateReportrequestByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getReportrequestByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete ReportRequest by ID",
+          "description": "This API Endpoint will delete report requestbyID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Help Center"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Delete reportrequest",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Report Request Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/deleteReportRequestByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getReportrequestByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/reports/<id>/image": {
+        "post": {
+          "tags": [
+            "Help Center"
+          ],
+          "summary": "Upload a report image",
+          "description": "This endpoint will upload a new report Image",
+          "security":[{"JWT": {} }],
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": { 
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "id": {
+                      "type": "string",
+                      "format": "string"
+                    },
+                    "device_type": {
+                      "type": "string",
+                      "format": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Report Image Created",
+              "content": {
+                "application/json": {
+                "schema": {
+                "$ref": "#/serverResponseExample/createReportImageSuccess"
+                  }
+                }
+              }
+            }, 
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/reports/<id>/image/<filename>": {
+        "delete": {
+          "summary": "Delete Report Image",
+          "description": "This endpoint will Delete Report Image",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Help Center"
+          ],
+          "responses": {
+            "200": {
+              "description": "Report Image Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/deleteReportImageByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getReportByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/supportrequest": {
+        "get": {
+          "tags": [
+            "Help Center"
+          ],
+          "summary": "Return SupportRequest",
+          "description": "This endpoint will get all SupportRequest",
+          "security":[{"JWT": {} }],
+          "produces": "['application/json']",
+          "responses": {
+            "200": {
+              "description": "SupportRequestData",
+              "content": {
+                "application/json": {
+                  "example": [
+                  {
+                    "_id":"655cc081add35235c1c1682c",
+                    "content":"Fabio Rosa",
+                    "files": "www.xyz.com"
+                  },
+                  {
+                    "_id":"655cc081add35235c1c1682c",
+                    "content":"Ian",
+                    "files": "www.xyz.com"
+                  }
+                ]
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Help Center"
+          ],
+          "summary": "Create a new Support request",
+          "description": "This endpoint will create a new Support request",
+          "requestBody": {
+            "description": "SupportRequest Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/support"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Support Request Created",
+              "content": {
+                "application/json": {
+                "schema": {
+                "$ref": "#/serverResponseExample/createSupportRequestSuccess"
+                  }
+                }
+              }
+            }, 
+            "400": {
+              "description": "Bad Request.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/createSupportRequestError"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/supportrequest/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the support request that we want to match",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Help Center"
+          ],
+          "summary": "Get Support Request with given ID",
+          "description": "This endpoint will get Support by ID.",
+          "security":[{"JWT": {} }],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Support Request ID",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Support Request Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getSupportrequestByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getReportrequestByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a Support Request by ID",
+          "description": "This endpoint will update a support request by ID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Help Center"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Update Support Request",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Update support request",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/support"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Support Request Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/updateSupportrequestByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getSupportrequestByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Support Request by ID",
+          "description": "This API Endpoint will delete support request byID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Help Center"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Delete support request",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Support Request Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/deleteSupportRequestByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getSupportrequestByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/theme-preference/<user_id>": {
+        "get": {
+          "tags": [
+            "Settings"
+          ],
+          "summary": "Return theme preference settings",
+          "description": "This endpoint will return theme preference.",
+          "security":[{"JWT": {} }],
+          "produces": "['application/json']",
+          "responses": {
+            "200": {
+              "description": "Theme Preference Data",
+              "content": {
+                "application/json": {
+                  "example": [
+                  {
+                      "theme": "light"
+                  },
+                  {
+                    "theme": "dark"
+                  }
+                ]
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a theme",
+          "description": "This endpoint will update a theme by ID",
+          "security":[{"JWT": {} }],
+          "tags": [
+            "Settings"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Update Theme",
+              "schema": {
+                "$ref": "#/schemas/id"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Update Theme",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/themepreference"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Theme Preference Data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/updateThemePreferenceByIdSuccess"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/unauthorizedError"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/getThemePreferenceByIdNotFoundError"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/serverResponseExample/serverError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/getAllData":{
+        "get": {
+          "tags": [
+            "Default"
+          ],
+          "summary": "Return All Data",
+          "description": "This endpoint will get all bookings",
+          "security":[{"JWT": {} }],
+          "produces": "['application/json']",
+          "responses": {
+            "200": {
+              "description": "All Data",
+              "content": {
+                "application/json": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+  "components": {
+    "securitySchemes":{
+    "JWT":{
+          "in": "header",
+          "name": "Authorization",
+          "type": "apiKey"
+        }
+      }
+    },
+    "schemas": {
+      "id": {
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          }
+    },
+      "signup": {
+        "type": "object",
+        "properties": {
+            "username": {
+                "type": "string",
+                "format": "string"
+              },
+            "email": {
+                "type": "string",
+                "format": "string"
+              },
+            "password": {
+                "type": "string",
+                "format": "string"
+              }
+        }
+    },
+      "login": {
+          "type": "object",
+          "properties": {
+              "username": {
+                  "type": "string",
+                  "format": "string"
+                },
+              "password": {
+                  "type": "string",
+                  "format": "string"
+                }
+          }
+    },
+      "logout": {
+        "type": "object",
+        "properties": {
+            "username": {
+                "type": "string",
+                "format": "string"
+              },
+            "password": {
+                "type": "string",
+                "format": "string"
+              }
+        }
+    },
+      "resetpassword": {
+        "type": "object",
+        "properties": {
+            "email": {
+                "type": "string",
+                "format": "string"
+              }
+        }
+    },
+      "profile": {
+          "type": "object",
+          "properties": {
+              "fullname": {
+                  "type": "string",
+                  "format": "string"
+                },
+              "imageUrl": {
+                  "type": "string",
+                  "format": "string"
+                },
+              "email": {
+                  "type": "string",
+                  "format": "string"
+                },
+              "dob": {
+                  "type": "string",
+                  "format": "string"
+                },
+              "phonenumber": {
+                  "type": "string",
+                  "format": "string"
+                },
+              "country": {
+                  "type": "string",
+                  "format": "string"
+                }
+          }
+    },
+      "profiles": {
+          "type": "object",
+          "properties": {
+            "game": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/schemas/profile"
+            }
+          }
+       }
+    },
+      "subscription": {
+      "type": "object",
+      "properties": {
+          "expiry_date": {
+              "type": "string",
+              "format": "string"
+            },
+          "amount": {
+              "type": "string",
+              "format": "string"
+            },
+          "status": {
+              "type": "string",
+              "format": "string"
+            },
+          "duration": {
+              "type": "string",
+              "format": "string"
+            }
+      }
+    },
+      "notificationsetting":{
+        "type": "object",
+        "properties": {
+            "state": {
+                "type": "boolean",
+                "format": "boolean"
+              }
+        }
+    },
+      "themepreference": { 
+        "type": "object",
+        "properties": {
+            "theme": {
+                "type": "string",
+                "format": "string"
+              }
+        }
+    },
+      "wallpapers": {
+          "type": "object",
+          "properties": {
+            "contact": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/schemas/wallpaper"
+            }
+          }
+       }
+    }
+    },
+  "serverResponseExample": {
+    "notFound": {
+      "message": "Not found"
+    },
+    "serverError": {
+      "example": {
+        "code": 500,
+        "message": "Internal server error"
+      }
+    },
+    "unauthorizedError": {
+      "example": {
+        "msg": "Missing Authorization Header"
+      }
+    },
+    "createSignupError": {
+      "example": {
+        "code": 400,
+        "message": "Username is required, Password is required"
+      }
+    },
+    "createLoginError": {
+      "example": {
+        "code": 400,
+        "message": "Username is required, Password is required"
+      }
+    },
+    "createLogoutError": {
+      "example": {
+        "code": 400,
+        "message": "Userid is required"
+      }
+    },
+    "createResetPasswordError": {
+      "example": {
+        "code": 404,
+        "message": "Email not found"
+      }
+    },
+    "createProfileError": {
+      "example": {
+        "code": 400,
+        "message": "Fullname is required, DOB is required, Email is required, PhoneNumber is required, Country is required, ImageUrl is required, "
+      }
+    },
+    "createSubscriptionError": {
+      "example": {
+        "code": 400,
+        "message": "Subscription duration is required"
+      }
+    },
+    "createToneError": {
+      "example": {
+        "code": 400,
+        "message": "Audio is required, Title is required, UrlTitle is required"
+      }
+    },
+    "createSignupSuccess": {
+      "example": {
+        "message": "User registered successfully"
+      }
+    },
+    "createLoginSuccess": {
+      "example": {
+        "access_token" :"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMTMyNDI0NSwianRpIjoiMGJkNWI2ZGQtYjc5Yy00ODBkLWE3NzAtMzMyYmVkMWFkMWU3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InVzZXIxIiwibmJmIjoxNzAxMzI0MjQ1LCJleHAiOjE3MDEzMjUxNDV9.E1nzEIXCqMMmmE5eGbo6zdEOpVFV_bWeqFzzZ8Zg_48"
+      }
+    },
+    "createLogoutSuccess": {
+      "example": {
+        "message": "User logged out successfully"
+      }
+    },
+    "createResetPasswordSuccess": {
+      "example": {
+        "message": "OTP sent successfully"
+      }
+    },
+    "createProfileSuccess": {
+      "example": {
+        "_id":"655cc081add35235c1c1682c",
+        "fullname":"Fabio Rosa",
+        "imageUrl": "www.xyz.com",
+        "email": "fabio@superminds.dev",
+        "dob": "01.01.2024",
+        "phonenumber": "100",
+        "country": "Portugal"
+      }
+    },
+    "createSubscriptionSuccess": {
+      "example": {
+        "message": "Subscription confirmed successfully",
+        "user_id": "65b201716d16bc37f6018b3f",
+        "duration": 12
+      }
+    },
+    "createWallpaperSuccess": {
+      "example": {
+        "_id":"655cc081add35235c1c1682c",
+        "description": "Explore and play bite-sized games anytime, anywhere-no downloads, just pure entertainment on the go!",
+        "imageURL":"/assets/wallpaper.png",
+        "title": "wallpapers",
+        "downloads": "5k",
+        "visited": "9k"
+      }
+    },
+    "createToneSuccess": {
+      "example": {
+        "_id":"655cc081add35235c1c1682c",
+        "description": "Explore and play bite-sized games anytime, anywhere-no downloads, just pure entertainment on the go!",
+        "audio":"https://xyz.com",
+        "Downloads": "5.5k",
+        "title": "Three Little Birds",
+        "urlTitle": "three-little-birds",
+        "visited": "10.5k"
+      }
+    },
+    "createProfileImageSuccess": {
+      "example": {
+        "file_url": "https://fortywinks.fra1.digitaloceanspaces.com/fortywinks/filename"
+      }
+    },
+    "getProfileByIdSuccess": {
+      "example": {
+        "_id":"655cc081add35235c1c1682c",
+        "fullname":"Fabio Rosa",
+        "imageUrl": "www.xyz.com",
+        "email": "fabio@superminds.dev",
+        "dob": "01.01.2024",
+        "phonenumber": "100",
+        "country": "Portugal"
+      }
+    },
+    "getSubscriptionByIdSuccess":{
+      "example":{
+        "expiry_date": "2025-01-25 11:30:34",
+        "amount": 120,
+        "status": "active",
+        "duration": 12
+      }
+    },
+    "cancelSubscriptionByIdSuccess":{
+      "example":{
+        "message": "Subscription canceled successfully"
+      }
+    },
+    "renewSubscriptionByIdSuccess":{
+      "example":{
+        "message": "Subscription renewed successfully"
+      }
+    },
+    "getProfileByIdNotFoundError": {
+      "example": {
+        "code": 404,
+        "message": "Profile not found" 
+      }
+    },
+    "getSubscriptionByIdNotFoundError":{
+      "example": {
+        "code": 404,
+        "message": "No active subscription found for the user"
+      }
+    },
+    "getThemePreferenceByIdNotFoundError": {
+      "example": {
+        "code": 404,
+        "message": "Theme Preference not found" 
+      }
+    },
+    "getToneByIdNotFoundError": {
+      "example": {
+        "code": 404,
+        "message": "Tone not found" 
+      }
+    },
+    "updateProfileByIdSuccess": {
+      "example": {
+        "_id":"655cc081add35235c1c1682c",
+        "fullname":"Fabio Rosa",
+        "imageUrl": "www.xyz.com",
+        "email": "fabio@superminds.dev",
+        "dob": "01.01.2024",
+        "phonenumber": "100",
+        "country": "Portugal"
+      }
+    },
+    "updateThemePreferenceByIdSuccess": {
+      "example": {
+          "message": "Theme preference updated successfully"
+      }
+    },
+    "updateNotificationSettingByIdSuccess":{
+      "example":{
+
+      }
+    },
+    "deleteProfileByIdSuccess": {
+      "example": {
+        "message": "Profile Deleted successfully"
+      }
+    },
+    "deleteProfileImageByIdSuccess": {
+      "example": {
+        "message": "Profile Image Deleted successfully"
+      }
+    }
+    }
+  }

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortywinks-api
+  namespace: superminds
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fortywinks-api
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: fortywinks-api
+    spec:
+      containers:
+        - name: fortywinks-api
+          image: registry.digitalocean.com/superminds/fortywinks-api:${{ env.IMAGE_TAG }}
+          ports:
+            - name: http
+              containerPort: 8080

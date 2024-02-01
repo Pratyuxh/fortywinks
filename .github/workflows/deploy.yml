@@ -1,0 +1,48 @@
+# Pipeline name
+name: Deploy to DigitalOcean Kubernetes
+
+# Trigger on push event on the main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@main
+
+      # Step 2: Install doctl
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      # Step 3: Builds the Docker image and pushes it to your container registry
+      - name: Build container image
+        env:
+          IMAGE_TAG: latest-${{ github.sha }}
+        run: |
+          docker build -t registry.digitalocean.com/superminds/fortywinks-api:${IMAGE_TAG} .
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
+
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 1200
+
+      - name: Push image to DigitalOcean Container Registry
+        run: docker push registry.digitalocean.com/superminds/fortywinks-api:${{ env.IMAGE_TAG }}
+
+      # Step 4: Deploys to k8s
+      - name: Save DigitalOcean kubeconfig with short-lived credentials
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-superminds
+
+      - name: Deploy to DigitalOcean Kubernetes
+        if: github.ref == 'refs/heads/main'
+        run: |
+          sed -i "s|image: registry.digitalocean.com/superminds/fortywinks-api:.*|image: registry.digitalocean.com/superminds/fortywinks-api:${{ env.IMAGE_TAG }}|" deployments/deployment.yaml
+          kubectl apply -f deployments/deployment.yaml
+          kubectl apply -f deployments/service.yaml
